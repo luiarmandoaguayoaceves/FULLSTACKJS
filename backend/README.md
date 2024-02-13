@@ -16,6 +16,7 @@
     npm i express (servidor)
     npm i mongoose (Base de datos en MongoDB)
     npm i -D nodemon (refresh del servidor dependencia de desarrollo)
+    npm i bcrypt (hashear las contraseñas)
 
 ## Carpeta config
     Se configura la conexion a la base de datos 
