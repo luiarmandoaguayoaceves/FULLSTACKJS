@@ -15,5 +15,5 @@ app.use("/api/veterinarios", veterinarioRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT , () => {
-    console.log(`servidor funcionando en: http://localhost:${PORT}/api/veterinarios/perfil`);
+    console.log(`servidor funcionando en: http://localhost:${PORT}/api/veterinarios`);
 })
