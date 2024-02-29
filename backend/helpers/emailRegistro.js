@@ -21,7 +21,7 @@ console.log(datos);
         text: 'Comprueba tu cuenta en APV',
         html: `<p>Hola: ${nombre}, comprueba tu cuenta en APV.</p>
         <p>Tu cuenta ya esta lista, solo deber comprobarla en el siguiente enlace:
-        <a href="${process.env.FRONT_END}/confirmar/${token}">Comprobar cuenta</a></p>
+        <a href="${process.env.FRONTEND_URL}/confirmar/${token}">Comprobar cuenta</a></p>
         <p>Si tu no creaste esta cuenta, puedes ignorar este mensaje</p>
         `
 
