@@ -1,6 +1,32 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import Alerta from '../components/Alerta'
+import clienteAxios from "../config/axios";
 
 const Login = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [alerta, setAlerta] = useState({})
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const {data} = await clienteAxios.post('/veterinarios/login', {password, email})
+      setAlerta({
+        msg: data.msg,
+        error: false
+      })
+      console.log(data);
+    } catch (error) {
+      setAlerta({
+        msg: error.response.data.msg,
+        error: true
+      })
+      
+    }
+    
+  }
+  const {msg} = alerta;
   return (
     <>
     <div>
@@ -10,7 +36,10 @@ const Login = () => {
       </h1>
     </div>
       <div className="mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
-        <form action="">
+        {msg && <Alerta
+          alerta={alerta}
+        />}
+        <form onSubmit={handleSubmit}>
           <div className="my-5">
             <label
             className="uppercase text-gray-600 block text-xl font-bold"
@@ -20,7 +49,10 @@ const Login = () => {
             <input 
             type="text" 
             placeholder="Email de Registros"
-            className="border w-full p-3 mt-3 bg-gray-50 rounded-xl" />
+            className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <div className="my-5">
             <label
@@ -31,7 +63,10 @@ const Login = () => {
             <input 
             type="text" 
             placeholder="Tu Password"
-            className="border w-full p-3 mt-3 bg-gray-50 rounded-xl" />
+            className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
           <input 
           type="submit"
