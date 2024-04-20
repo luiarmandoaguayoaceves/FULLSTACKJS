@@ -12,7 +12,7 @@ const checkAuth = async (req, res, next) => {
             const decode = jwt.verify(token,process.env.JWT_SECRET);
             req.veterinario = await Veterinario.findById(decode.id).select(
                 "-password -token -confirmado"
-                );
+            );
             return next()
         } catch (error) {
             const e = new Error('Token no valido');

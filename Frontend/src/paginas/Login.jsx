@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { useState } from "react";
 import Alerta from '../components/Alerta'
 import clienteAxios from "../config/axios";
@@ -8,15 +8,25 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [alerta, setAlerta] = useState({})
 
+  const navigate = useNavigate()
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if([email, password].includes(' ')){
+      setAlerta({
+        msg: 'Todos los campos son obligatorios',
+        error: true
+      })
+      return
+    }
     try {
       const {data} = await clienteAxios.post('/veterinarios/login', {password, email})
       setAlerta({
         msg: data.msg,
         error: false
       })
-      console.log(data);
+      localStorage.setItem('token', data.token)
+      navigate('/admin')
     } catch (error) {
       setAlerta({
         msg: error.response.data.msg,
@@ -61,7 +71,7 @@ const Login = () => {
                 Password
             </label>
             <input 
-            type="text" 
+            type="password" 
             placeholder="Tu Password"
             className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
             value={password}
