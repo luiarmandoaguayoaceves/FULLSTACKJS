@@ -6,11 +6,12 @@ const RutaProtegida = () => {
 
     const {auth, cargando} = useAuth();
 
+    
     if(cargando) return 'Cargando.....'
   return (
     <>
     <h1>Esta es una ruta protegida</h1>
-    {auth?._id ? <Outlet/> : <Navigate to='/' />}
+    {auth?.veterinario._id ? <Outlet/> : <Navigate to='/' />}
     </>
   )
 }
