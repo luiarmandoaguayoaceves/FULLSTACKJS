@@ -13,7 +13,7 @@ const RutaProtegida = () => {
   return (
     <>
     <Header/>
-    {auth?.veterinario._id ? (
+    {auth?._id ? (
         <main className="container mx-auto mt-10">
             <Outlet/> 
         </main>
