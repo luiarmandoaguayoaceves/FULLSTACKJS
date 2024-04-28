@@ -42,12 +42,13 @@ const AuthProvider = ({children}) => {
 
     return(
         <AuthContext.Provider
-        value={{
-            auth,
-            setAuth,
-            cargando,
-            cerrarSesion
-        }}>
+            value={{
+                auth,
+                setAuth,
+                cargando,
+                cerrarSesion
+            }}
+        >
             {children}
         </AuthContext.Provider>
     )
