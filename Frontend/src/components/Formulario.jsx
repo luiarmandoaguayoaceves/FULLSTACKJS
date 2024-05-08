@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useState, useEffect} from "react"
 import Alerta from './Alerta'
+import usePacientes from "../hooks/usePacientes"
 
 function Formulario() {
 
@@ -8,9 +9,25 @@ function Formulario() {
     const [email, setEmail] = useState('')
     const [fecha, setFecha] = useState(Date.now())
     const [sintomas, setSintomas] = useState('')
+    const [id, setId] = useState(null)
 
     const [alerta, setAlerta] = useState({})
 
+    const { guardarPaciente, paciente } = usePacientes()
+
+    // console.log(paciente);
+
+
+    useEffect(() => {
+        if(paciente?.nombre){
+            setNombre(paciente.nombre)
+            setPropietario(paciente.propietario)
+            setEmail(paciente.email)
+            setFecha(new Date(paciente.fecha).toLocaleDateString('en-CA'))
+            setSintomas(paciente.sintomas)
+            setId(paciente._id)
+        }
+    }, [paciente])
     const handleSubmit = e => {
         e.preventDefault()
 
@@ -20,16 +37,22 @@ function Formulario() {
                 msg: 'Todos los campos son obligatorios',
                 error: true
             })
+            return;
         }
+
+
+        setAlerta({})
+        guardarPaciente({nombre, propietario, email, fecha, sintomas, id})
     }
 
 
     const { msg } = alerta
   return (
     <>
-    <p className="text-lg text-center mb-10">Añade tu pacientes y{' '}
-        <span className="text-indigo-600 font-bold">Administralos</span>
-    </p>
+        <h2 className="font-black text-center text-3xl">Administrador de Pacientes</h2>
+        <p className="text-xl mt-5 mb-10 text-center">Añade tus pacientes y {''}
+            <span className="text-indigo-600 font-bold">Administralos</span>
+        </p>
 
 
     <form
@@ -107,7 +130,7 @@ function Formulario() {
         <input 
         type="submit"
         className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
-        value="Agregar Paciente" 
+        value={id ? 'Guardar cambios' : 'Editar pacientes'} 
         />
     </form>
 
