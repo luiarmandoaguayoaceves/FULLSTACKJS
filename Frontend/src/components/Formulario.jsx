@@ -7,7 +7,7 @@ function Formulario() {
     const [nombre, setNombre] = useState('')
     const [propietario, setPropietario] = useState('')
     const [email, setEmail] = useState('')
-    const [fecha, setFecha] = useState(Date.now())
+    const [fecha, setFecha] = useState('')
     const [sintomas, setSintomas] = useState('')
     const [id, setId] = useState(null)
 
@@ -41,8 +41,16 @@ function Formulario() {
         }
 
 
-        setAlerta({})
         guardarPaciente({nombre, propietario, email, fecha, sintomas, id})
+        setAlerta({
+            msg: 'Guardado correctamente'
+        })
+        setNombre('')
+        setPropietario('')
+        setEmail('')
+        setFecha('')
+        setSintomas('')
+        setId('')
     }
 
 
@@ -130,7 +138,7 @@ function Formulario() {
         <input 
         type="submit"
         className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
-        value={id ? 'Guardar cambios' : 'Editar pacientes'} 
+        value={id ? 'Guardar cambios' : 'Agregar paciente'} 
         />
     </form>
 
