@@ -10,6 +10,7 @@ const registrar = async (req, res) => {
     //Revisar su existe un usuario duplicado
 
     const existeUsuario = await Veterinario.findOne({email})
+    console.log(existeUsuario);
 
     if (existeUsuario){
         const error = new Error('Usuario ya registrado');
@@ -47,6 +48,7 @@ const perfil = (req, res) => {
 const confirmar = async (req, res) => {
     const {token} = req.params;
     const usuarioConfirmar = await Veterinario.findOne({token})
+    console.log(usuarioConfirmar);
     if(!usuarioConfirmar){
         const error = new Error('Token no valido');
         return res.status(404).json({msg: error.message});
@@ -150,6 +152,36 @@ const nuevoPassword = async (req, res) => {
     }
 }
 
+const actualizarPerfil = async (req, res) => {
+    const veterinario = await Veterinario.findById(req.params.id);
+    
+    if(!veterinario){
+        const error = new Error("Hubo un error");
+        return res.status(400).json({msg: error.message})
+    }
+
+    const {email} = req.body;
+    if(veterinario.email !== email){
+        const existeEmail = await Veterinario.findOne({email})
+        if(existeEmail){
+            const error = new Error("Eses email ya esta en uso");
+            return res.status(400).json({msg: error.message})
+        }
+    }
+
+    try {
+        veterinario.nombre = req.body.nombre 
+        veterinario.web = req.body.web 
+        veterinario.telefono = req.body.telefono 
+        veterinario.email = req.body.email 
+
+        const veterinarioActualizado = await veterinario.save()
+        res.json(veterinarioActualizado)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export {
     registrar,
     perfil,
@@ -157,5 +189,6 @@ export {
     autenticar,
     olvidePassword,
     comprobarToken,
-    nuevoPassword
+    nuevoPassword,
+    actualizarPerfil
 }
