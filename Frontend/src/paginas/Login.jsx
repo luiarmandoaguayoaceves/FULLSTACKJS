@@ -23,14 +23,14 @@ const Login = () => {
       return
     }
     try {
-      const {data} = await clienteAxios.post('/veterinarios/login', {password, email})
-      localStorage.setItem('token', data.token)
-      setAuth(data)
-      navigate('/admin')
+      const { data } = await clienteAxios.post('/veterinarios/login', {email, password})
+        localStorage.setItem('token', data.token)
+        setAuth(data)
+        navigate('/admin')
     } catch (error) {
-      setAlerta({
-        msg: error.response.data.msg,
-        error: true
+        setAlerta({
+          msg: error.response.data.msg,
+          error: true
       })
       
     }

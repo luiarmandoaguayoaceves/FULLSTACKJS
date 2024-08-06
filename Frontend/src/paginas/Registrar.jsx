@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import axios from 'axios';
 import clienteAxios from "../config/axios";
 import Alerta from "../components/Alerta";
 
@@ -15,26 +16,29 @@ const Registrar = () => {
     e.preventDefault()
 
     if([nombre, email, password, repetirPassword].includes('')){
-      return setAlerta({msg: 'Algun campo esta vacio', error: true})
+      return setAlerta({msg: 'Algún campo esta vació', error: true})
     }
 
     if(password !== repetirPassword){
       return setAlerta({msg: 'Los password son diferentes', error: true})
     }
     if(password.length < 6 ){
-      return setAlerta({msg: 'El password es muy corto, agregar minimo 6 caracteres', error: true})
+      return setAlerta({msg: 'El password es muy corto, agregar mínimo 6 caracteres', error: true})
     }
     setAlerta({})
 
     //Crear Usuario en la API
     try {
-      await clienteAxios.post(`/veterinarios`, {nombre, email, password})
-      setAlerta(
-        {
-        msg: 'Creado Correctamente, Revisa tu Email', 
-        error: false
-      }
-      )
+      const url = "http://localhost:4000/api/veterinarios"
+      const respuesta = axios.post(url, {nombre, email, password})
+      console.log(respuesta);
+      // await clienteAxios.post(`/veterinarios`, {nombre, email, password})
+      // setAlerta(
+      //   {
+      //   msg: 'Creado Correctamente, Revisa tu Email', 
+      //   error: false
+      // }
+      // )
     } catch (error) {
       setAlerta(
         {

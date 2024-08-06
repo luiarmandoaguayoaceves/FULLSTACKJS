@@ -26,7 +26,7 @@ const AuthProvider = ({children}) => {
                 const {data} = await clienteAxios('/veterinarios/perfil', config)
                 setAuth(data.veterinario)
             } catch (error) {
-                console.log(error.response.data.msg);
+                // console.log(error.response.data.msg);
                 setAuth({})
             }
             setCargando(false)
